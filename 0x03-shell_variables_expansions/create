@@ -64,8 +64,7 @@ if [ "$push" = true ]; then
 	if git add $filename; then
 
 		# commit changes
-		read -p "Enter commit message: " message
-		git commit -m "$message"
+		git commit -m "$filename"
 
 		# push the changes
 		git push
