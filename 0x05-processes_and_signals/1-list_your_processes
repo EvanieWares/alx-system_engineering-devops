@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Display column headers
+printf "%-9s %-5s %-5s %-8s %-8s %-4s %-7s %-6s %-5s %s\n" "USER" "PID" "%CPU" "%MEM" "VSZ" "RSS" "TTY" "STAT" "START" "TIME" "COMMAND"
+
+# Use the ps command to list all processes, display process hierarchy
+ps axo user:9,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,comm --forest | sed 's/^\s*//'
