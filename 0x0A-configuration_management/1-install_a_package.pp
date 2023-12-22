@@ -1,14 +1,13 @@
 # Install flask from pip3.
 
 # Install Python (3.8.10)
-package { 'python3.8':
-  ensure => '3.8.10',
+package { 'python':
+  ensure => present,
 }
 
 # Install pip
 package { 'python3-pip':
-  ensure  => 'present',
-  require => Package['python3.8'],
+  ensure  => present,
 }
 
 # Install Werkzeug (2.1.1)
