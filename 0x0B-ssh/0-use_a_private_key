@@ -2,6 +2,3 @@
 
 # Using ssh with single-character flag to connect using the private key
 ssh -i ~/.ssh/school ubuntu@52.91.133.58
-
-# Exit the script
-exit 0
