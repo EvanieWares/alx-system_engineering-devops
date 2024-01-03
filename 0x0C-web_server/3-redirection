@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Configures the nginx to redirect to another page
+
+# Update the system
+sudo apt-get update
+
+# Install nginx
+sudo apt install -y nginx
+
+# Create a directory
+sudo mkdir /var/www/html/redirect_me
+
+# Create index.html file
+sudo touch /var/www/html/redirect_me/index.html
+
+# Add "301 Moved Permanently" as the contents of the file
+echo "301 Moved Permanently" | sudo tee /var/www/html/redirect_me/index.html
+
+# Restart nginx
+sudo service nginx restart
