@@ -12,7 +12,7 @@ apt-get -y install haproxy
 
 # Configure HAproxy
 sed -i -e '$aENABLED=1\n' /etc/default/haproxy
-sed -i -e '$a\listen balancer\n\tbind :80\n\tbalance roundrobin\n\tserver 50998-web-01 18.233.64.52:80 check\n\tserver 509982-web-02 18.210.20.50:80 check\n' /etc/haproxy/haproxy.cfg
+sed -i -e '$a\listen balancer\n\tbind :80\n\tbalance roundrobin\n\tserver 438562-web-01 52.91.133.58 check\n\tserver 438562-web-02 54.157.146.125 check\n' /etc/haproxy/haproxy.cfg
 
 # Restart HAproxy
 service haproxy restart
