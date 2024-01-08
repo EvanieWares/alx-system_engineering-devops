@@ -1,4 +1,4 @@
-# Puppet manifest to install nginx, configure the server and sets a custom header
+# Installs nginx, configure the server and sets a custom header
 
 exec {'update':
   provider => shell,
