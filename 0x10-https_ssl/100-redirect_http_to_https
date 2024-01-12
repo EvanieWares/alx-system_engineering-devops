@@ -33,10 +33,17 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend www-https
+frontend www-http
         bind *:80
+        option forwardfor
+        http-request set-header X-Forwarded-Proto http
+        acl is_ssl hdr(X-Forwarded-Proto) https
+        redirect scheme https code 301 if !is_ssl
+
+frontend www-https
         bind *:443 ssl crt /etc/haproxy/certs/www.evaniewares.tech.pem
-        http-request redirect scheme https unless { ssl_fc }
+        option forwardfor
+        http-request set-header X-Forwarded-Proto https
         default_backend backend_servers
 
 backend backend_servers
