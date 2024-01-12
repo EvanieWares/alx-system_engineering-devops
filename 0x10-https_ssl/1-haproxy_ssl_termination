@@ -35,13 +35,11 @@ defaults
 
 frontend www-https
         bind *:80
-        bind *:443 ssl crt /etc/letsencrypt/live/www.evaniewares.tech/fullchain.pem
+        bind *:443 ssl crt /etc/haproxy/certs/www.evaniewares.tech.pem
         http-request redirect scheme https unless { ssl_fc }
         default_backend backend_servers
 
 backend backend_servers
         balance roundrobin
-        option httpchk GET /
-        option redispatch
         server 438562-web-01 52.91.133.58:80 check
         server 438562-web-02 54.157.146.125:80 check
