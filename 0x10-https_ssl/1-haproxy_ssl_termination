@@ -36,6 +36,7 @@ defaults
 frontend www-https
         bind *:80
         bind *:443 ssl crt /etc/haproxy/certs/www.evaniewares.tech.pem
+        http-request redirect scheme https unless { ssl_fc }
         default_backend backend_servers
 
 backend backend_servers
