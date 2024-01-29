@@ -6,21 +6,48 @@ import csv
 import requests
 import sys
 
+
+def get_username(url, user_id):
+    """
+    Gets the username from REST API
+
+    Args:
+        url (str): Base url
+        user_id (int): The id of the user
+
+    Returns:
+        User name
+    """
+    r = requests.get(f'{url}/users/{user_id}')
+    user = r.json()
+    return user.get('name')
+
+
+def get_todos(url, user_id):
+    """
+    Gets the todos for a particular user from REST API
+
+    Args:
+        url (str): Base url
+        user_id (int): The id of the user
+
+    Returns:
+        Todos
+    """
+    r = requests.get(f'{url}/todos?userId={user_id}')
+    todos = r.json()
+    return todos
+
+
 if __name__ == "__main__":
-    user_id = int(sys.argv[1])
+    user_id = sys.argv[1]
     base_url = "https://jsonplaceholder.typicode.com"
-    todo_url = f"{base_url}/todos?userId={user_id}"
-    user_url = f"{base_url}/users/{user_id}"
-    todos_response = requests.get(todo_url)
-    users_response = requests.get(user_url)
+    user_name = get_username(base_url, user_id)
+    todos = get_todos(base_url, user_id)
 
-    csv_file = f'{user_id}.csv'
-    name = users_response.json().get('name')
-    todos = todos_response.json()
-
-    with open(csv_file, 'w', newline='') as f:
-        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
+    with open(f'{user_id}.csv', 'w') as csv_file:
+        writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
         for todo in todos:
             writer.writerow(
-                [user_id, name, todo.get('completed'), todo.get('title')]
+                [user_id, user_name, todo.get('completed'), todo.get('title')]
             )
