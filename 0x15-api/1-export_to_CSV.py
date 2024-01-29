@@ -28,12 +28,12 @@ if __name__ == "__main__":
         print("Error", e)
         exit(1)
 
-    csv_file = 'USER_ID.csv'
+    csv_file = f'{employee_id}.csv'
     name = users_response.json().get('name')
     todos = todos_response.json()
 
     with open(csv_file, 'w', newline='') as f:
-        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
+        writer = csv.writer(f)
         for todo in todos:
             writer.writerow(
                 (employee_id, name, todo.get('completed'), todo.get('title'))
