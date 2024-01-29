@@ -6,39 +6,16 @@ import json
 import requests
 
 if __name__ == "__main__":
-    json_file = 'todo_all_employees.json'
-    base_url = "https://jsonplaceholder.typicode.com"
-    users_url = f"{base_url}/users"
-    try:
-        users_response = requests.get(users_url)
-        users_response.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print("Error", e)
-        exit(1)
+    url = "https://jsonplaceholder.typicode.com/users"
+    r = requests.get(url)
+    users = r.json()
 
-    users = users_response.json()
-    all_todos = {}
-
-    for user in users:
-        todo_url = f"{base_url}/todos?userId={user.get('id')}"
-        try:
-            todos_response = requests.get(todo_url)
-            todos_response.raise_for_status()
-        except requests.exceptions.RequestException as e:
-            print("Error", e)
-            exit(1)
-
-        todos = todos_response.json()
-        todo_list = []
-
-        for todo in todos:
-            todo_list.append({
-                "username": user.get('name'),
-                "task": todo.get('title'),
-                "completed": todo.get('completed')
-            })
-
-        all_todos[str(user.get('id'))] = todo_list
-
-    with open(json_file, 'w') as f:
-        json.dump(all_todos, f)
+    with open("todo_all_employees.json", "w") as jsonfile:
+        json.dump({
+            u.get("id"): [{
+                "task": t.get("title"),
+                "completed": t.get("completed"),
+                "username": u.get("username")
+            } for t in requests.get(url + "todos",
+                                    params={"userId": u.get("id")}).json()]
+            for u in users}, jsonfile)
