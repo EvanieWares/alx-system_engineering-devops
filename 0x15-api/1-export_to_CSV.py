@@ -20,7 +20,7 @@ def get_username(url, user_id):
     """
     r = requests.get(f'{url}/users/{user_id}')
     user = r.json()
-    return user.get('name')
+    return user.get('username')
 
 
 def get_todos(url, user_id):
