@@ -19,9 +19,8 @@ def top_ten(subreddit):
 
     r = requests.get(url=url, headers=headers, allow_redirects=False)
     if r.status_code == 200:
-        subreddits = r.json()
-        if subreddits.get('kind') == 'Listing':
-            for data in subreddits.get('data').get('children'):
-                print(data.get('data').get('title'))
+        subs = r.json()
+        for data in subs.get('data').get('children'):
+            print(data.get('data').get('title'))
     else:
         print(None)
