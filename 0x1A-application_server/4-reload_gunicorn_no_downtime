@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # Restarts gunicorn service gracefully
 
-pid=$(sudo systemctl show --property MainPID gunicorn | cut -f 2 -d '=')
-if ps -f --pid "$pid" > /dev/null; then
-	sudo kill -HUP "$pid"
-	sudo systemctl reload gunicorn
+PID=$(pgrep gunicorn)
+
+if [ -z "$PID" ]; then
+  echo "Gunicorn is not running."
+else
+  kill -HUP $PID
+  echo "Gunicorn has been gracefully reloaded."
 fi
