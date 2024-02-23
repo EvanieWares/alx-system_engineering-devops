@@ -6,6 +6,6 @@ PID=$(pgrep gunicorn)
 if [ -z "$PID" ]; then
   echo "Gunicorn is not running."
 else
-  kill -HUP $PID
+  kill -HUP "$PID"
   echo "Gunicorn has been gracefully reloaded."
 fi
